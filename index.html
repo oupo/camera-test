@@ -8,13 +8,19 @@
 
 <body>
     <video id="video" width="800" height="600"></video>
-    <button id="button1">focus 1</button>
-    <button id="button2">focus 2</button>
+    <button id="button1">focus 0</button>
+    <button id="button2">focus 0.5</button>
+    <button id="button3">focus 1</button>
+    <button id="button4">focus 2</button>
+    <button id="button5">focus 4</button>
     <div id="out"></div>
     <script>
         const video = document.getElementById("video");
         const button1 = document.getElementById("button1");
         const button2 = document.getElementById("button2");
+        const button3 = document.getElementById("button3");
+        const button4 = document.getElementById("button4");
+        const button5 = document.getElementById("button5");
         const out = document.getElementById("out");
 
         function print(str) {
@@ -34,22 +40,29 @@
             const track = stream.getVideoTracks()[0];
             print(JSON.stringify(track.getCapabilities()));
             button1.addEventListener("click", () => {
-                track.applyConstraints({ advanced: [{focusMode: "manual", focusDistance: 1 }] })
-                .then(() => {
-                    print("success");
-                })
-                .catch(e => {
-                    print(e);
-                })
+                track.applyConstraints({ advanced: [{focusMode: "manual", focusDistance: 0 }] })
+                .then(() => { print("success"); })
+                .catch(e => { print(e); });
             });
             button2.addEventListener("click", () => {
+                track.applyConstraints({ advanced: [{focusMode: "manual", focusDistance: 0.5 }] })
+                .then(() => { print("success"); })
+                .catch(e => { print(e); });
+            });
+            button3.addEventListener("click", () => {
+                track.applyConstraints({ advanced: [{focusMode: "manual", focusDistance: 1 }] })
+                .then(() => { print("success"); })
+                .catch(e => { print(e); });
+            });
+            button4.addEventListener("click", () => {
                 track.applyConstraints({ advanced: [{focusMode: "manual", focusDistance: 2 }] })
-                .then(() => {
-                    print("success");
-                })
-                .catch(e => {
-                    print(e);
-                })
+                .then(() => { print("success"); })
+                .catch(e => { print(e); });
+            });
+            button5.addEventListener("click", () => {
+                track.applyConstraints({ advanced: [{focusMode: "manual", focusDistance: 4 }] })
+                .then(() => { print("success"); })
+                .catch(e => { print(e); });
             });
             video.srcObject = stream;
             video.play();
