@@ -23,8 +23,13 @@
         }).then(function (stream) {
             const track = stream.getVideoTracks()[0];
             button.addEventListener("click", () => {
-                track.applyConstraints({ focusMode: "manual" });
-                out.innerHTML = "manual";
+                track.applyConstraints({ focusMode: "manual" })
+                .then(() => {
+                    out.innerHTML = "success";
+                })
+                .catch(e => {
+                    out.innerText = String(e);
+                })
             });
             video.srcObject = stream;
             video.play();
