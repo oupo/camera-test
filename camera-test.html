@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>camera test</title>
+</head>
+
+<body>
+    <video id="video" width="800" height="600"></video>
+    <button id="button">focus off</button>
+    <div id="out"></div>
+    <script>
+        const video = document.getElementById("video");
+        const button = document.getElementById("button");
+        const out = document.getElementById("out");
+        navigator.mediaDevices.getUserMedia({
+            audio: false,
+            video: {
+                facingMode: "environment",
+                width: { ideal: 2048 },
+            }
+        }).then(function (stream) {
+            const track = stream.getVideoTracks()[0];
+            button.addEventListener("click", () => {
+                track.applyConstraints({ focusMode: "manual" });
+                out.innerHTML = "manual";
+            });
+            video.srcObject = stream;
+            video.play();
+        });
+    </script>
+</body>
+
+</html>
