@@ -8,11 +8,13 @@
 
 <body>
     <video id="video" width="800" height="600"></video>
-    <button id="button">focus off</button>
+    <button id="button1">focus 1</button>
+    <button id="button2">focus 2</button>
     <div id="out"></div>
     <script>
         const video = document.getElementById("video");
-        const button = document.getElementById("button");
+        const button1 = document.getElementById("button");
+        const button2 = document.getElementById("button");
         const out = document.getElementById("out");
 
         function print(str) {
@@ -31,8 +33,17 @@
         }).then(function (stream) {
             const track = stream.getVideoTracks()[0];
             print(JSON.stringify(track.getCapabilities()));
-            button.addEventListener("click", () => {
-                track.applyConstraints({ advanced: [{focusMode: "manual" }] })
+            button1.addEventListener("click", () => {
+                track.applyConstraints({ advanced: [{focusMode: "manual", focusDistance: 1 }] })
+                .then(() => {
+                    print("success");
+                })
+                .catch(e => {
+                    print(e);
+                })
+            });
+            button2.addEventListener("click", () => {
+                track.applyConstraints({ advanced: [{focusMode: "manual", focusDistance: 2 }] })
                 .then(() => {
                     print("success");
                 })
